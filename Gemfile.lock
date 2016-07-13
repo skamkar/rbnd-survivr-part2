@@ -1,0 +1,18 @@
+GIT
+  remote: https://github.com/skamkar/survivr_1.git
+  revision: c6968eb0416cb872a46985f1cfdcb290c9eab72a
+  specs:
+    colorizr (0.0.1)
+
+GEM
+  remote: http://rubygems.org/
+  specs:
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  colorizr!
+
+BUNDLED WITH
+   1.12.5
