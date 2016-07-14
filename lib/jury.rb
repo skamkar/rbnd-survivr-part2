@@ -35,8 +35,8 @@ class Jury
     end
 
     # Print votes to terminal
-    puts "#{names.first}\n" * tally[0]
-    puts "#{names.last}\n"  * tally[1]
+    puts "#{names.first.light_blue}\n" * tally[0]
+    puts "#{names.last.blue}\n"  * tally[1]
 
     @finalists
   end
@@ -44,15 +44,15 @@ class Jury
   # Print votes to terminal
   def report_votes(final_votes)
     final_votes.each do |final_vote|
-      puts "#{final_vote[0].name} earned #{final_vote[1]} vote(s)."
+      puts "#{final_vote[0].name.pink} earned #{final_vote[1]} vote(s)."
     end
   end
 
   def announce_winner(final_votes)
     if final_votes.values[0] > final_votes.values[1]
-      puts "#{final_votes.keys[0].name.upcase} IS THE GRAND WINNER!"
+      puts "#{final_votes.keys[0].name.upcase} IS THE GRAND WINNER!".green
     else
-      puts "#{final_votes.keys[1].name.upcase} IS THE GRAND WINNER!"
+      puts "#{final_votes.keys[1].name.upcase} IS THE GRAND WINNER!".green
     end
     final_votes.values[0] > final_votes.values[1] ? final_votes.keys[0] : final_votes.keys[1]
   end

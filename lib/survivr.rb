@@ -3,6 +3,7 @@ require_relative "tribe"
 require_relative "contestant"
 require_relative "jury"
 require 'byebug'
+require 'colorizr'
 
 #After your tests pass, uncomment this code below
 #=========================================================
@@ -22,7 +23,6 @@ require 'byebug'
 def phase_one
   puts "\nPHASE ONE"
   eliminated = []
-
   8.times do
     # Eliminate random contestant
     # individual_immunity_challenge is overloaded to pick 'loser' instead of 'winner'
@@ -39,7 +39,7 @@ def phase_one
     end
 
     # Print result to terminal
-    puts "#{losing_team} lost and have eliminated #{eliminated.last}."
+    puts "#{losing_team.yellow} lost and has eliminated #{eliminated.last.name.red}."
   end
 
   eliminated.length
@@ -61,7 +61,7 @@ def phase_two
     # Eliminate random contestant for each challenge
     eliminated << @merge_game.individual_immunity_challenge
     @merge_tribe.members.delete(eliminated.last)
-    puts "From #{@merge_tribe.name}, #{eliminated.last} has been eliminated."
+    puts "From #{@merge_tribe.name.yellow}, #{eliminated.last.name.red} has been eliminated."
     # Assign winner contestant (with immunity) for each challenge
     immune << @merge_game.individual_immunity_challenge
   end
@@ -80,7 +80,7 @@ def phase_three
   7.times do
     jury << @merge_game.individual_immunity_challenge
     @merge_tribe.members.delete(jury.last)
-    puts "#{jury.last} has been eliminated and assigned to the Jury."
+    puts "#{jury.last.name.red} has been eliminated and assigned to the Jury."
   end
   @jury.members = jury
   jury.length

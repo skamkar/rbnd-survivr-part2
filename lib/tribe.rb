@@ -1,3 +1,5 @@
+require 'colorizr'
+
 class Tribe
 
   attr_reader :name, :members
@@ -5,7 +7,7 @@ class Tribe
   def initialize(options = {})
     @name = options[:name]
     @members = options[:members]
-    puts "The #{@name} tribe has been created."
+    puts "The #{@name.yellow} tribe has been created."
   end
 
   def to_s
