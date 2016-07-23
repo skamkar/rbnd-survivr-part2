@@ -15,10 +15,7 @@ class Tribe
   end
 
   def tribal_council(immune)
-    if immune.keys[0] == :immune
-      Contestant.new(nil)
-    else
-      immune.values[0]
-    end
+    non_immune = @members.reject{ |member| member == immune[:immune]}
+    @members.delete(non_immune.sample)
   end
 end
