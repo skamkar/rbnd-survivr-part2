@@ -3,7 +3,7 @@ class Game
   attr_reader :tribes
 
   def initialize(*tribes)
-    @tribes = tribes
+    @tribes = ([] << tribes).flatten!
   end
 
   def add_tribe(tribe)
@@ -11,13 +11,11 @@ class Game
   end
 
   def immunity_challenge
-    tribe_count = self.tribes.length
-    selection = rand(0..tribe_count-1)
-    self.tribes[selection]
+    @tribes.sample
   end
 
   def clear_tribes
-    []
+    @tribes.clear
   end
 
   def merge(new_tribe_name)
@@ -25,8 +23,7 @@ class Game
   end
 
   def individual_immunity_challenge
-    selection = rand(0..all_contestants.length-1)
-    all_contestants[selection]
+    @tribes.first.members.sample
   end
 
   private
