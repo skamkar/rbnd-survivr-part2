@@ -21,65 +21,36 @@ require 'colorizr'
 
 #This is where you will write your code for the three phases
 def phase_one
-  puts "\nPHASE ONE"
+  puts "\nPHASE ONE:"
   eliminated = []
   8.times do
-    # Eliminate random contestant
-    # individual_immunity_challenge is overloaded to pick 'loser' instead of 'winner'
-    eliminated << @borneo.individual_immunity_challenge
-
-    # Determine losing team, delete member    
-    losing_team = nil
-    @borneo.tribes.each do |tribe|
-      if tribe.members.map(&:name).include?(eliminated.last.name)
-        losing_team = tribe.name
-        tribe.members.delete(eliminated.last)
-        break
-      end
-    end
-
-    # Print result to terminal
-    puts "#{losing_team.yellow} lost and has eliminated #{eliminated.last.name.red}."
+    losing_tribe = @borneo.immunity_challenge
+    immune = {immune: nil}
+    eliminated << losing_tribe.tribal_council(immune)
+    puts "#{losing_tribe.name.yellow} lost and has eliminated #{eliminated.last.name.red}."
   end
-
   eliminated.length
 end
 
 def phase_two
-  # Perform phase_one if necessary
-  unless @merge_tribe.members.length == 12
-    phase_one
-    @merge_tribe = @borneo.merge("Cello")
-  end
-  @merge_game = Game.new(@merge_tribe)
-
-  puts "\nPHASE TWO"    
+  puts "\nPHASE TWO:"    
   eliminated = []
-  immune = []
-
   3.times do
-    # Eliminate random contestant for each challenge
-    eliminated << @merge_game.individual_immunity_challenge
-    @merge_tribe.members.delete(eliminated.last)
+    individual_winner = @merge_tribe.members.sample
+    immune = {immune: individual_winner}
+    eliminated << @merge_tribe.tribal_council(immune)
     puts "From #{@merge_tribe.name.yellow}, #{eliminated.last.name.red} has been eliminated."
-    # Assign winner contestant (with immunity) for each challenge
-    immune << @merge_game.individual_immunity_challenge
   end
-
   eliminated.length  
 end
 
 def phase_three
-  # Perform phase_two (and phase_one) if necessary
-  unless @merge_tribe.members.length == 9
-    phase_two
-  end
-
-  puts "\nPHASE THREE"
+  puts "\nPHASE THREE:"
   jury = []
   7.times do
-    jury << @merge_game.individual_immunity_challenge
-    @merge_tribe.members.delete(jury.last)
+    individual_winner = @merge_tribe.members.sample
+    immune = {immune: individual_winner}
+    jury << @merge_tribe.tribal_council(immune)
     puts "#{jury.last.name.red} has been eliminated and assigned to the Jury."
   end
   @jury.members = jury
@@ -90,6 +61,7 @@ end
 #=========================================================
 phase_one #8 eliminations
 @merge_tribe = @borneo.merge("Cello") # After 8 eliminations, merge the two tribes together
+
 phase_two #3 more eliminations
 @jury = Jury.new
 phase_three #7 elminiations become jury members
