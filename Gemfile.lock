@@ -7,12 +7,16 @@ GIT
 GEM
   remote: http://rubygems.org/
   specs:
+    byebug (9.0.5)
+    minitest (5.9.0)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
+  byebug
   colorizr!
+  minitest
 
 BUNDLED WITH
    1.12.5
