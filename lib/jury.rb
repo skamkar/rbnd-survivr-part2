@@ -49,12 +49,8 @@ class Jury
   end
 
   def announce_winner(final_votes)
-    if final_votes.values[0] > final_votes.values[1]
-      puts "#{final_votes.keys[0].name.upcase} IS THE GRAND WINNER!".green
-    else
-      puts "#{final_votes.keys[1].name.upcase} IS THE GRAND WINNER!".green
-    end
-    final_votes.values[0] > final_votes.values[1] ? final_votes.keys[0] : final_votes.keys[1]
+    winner = final_votes.max_by{|k,v| v}[0]
+    puts "#{winner.name.upcase} IS THE GRAND WINNER!".green
+    winner
   end
-
 end
